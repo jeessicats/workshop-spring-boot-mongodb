@@ -1,6 +1,7 @@
 package com.jeessicats.workshopmongo.services;
 
 import com.jeessicats.workshopmongo.domain.User;
+import com.jeessicats.workshopmongo.dto.UserDTO;
 import com.jeessicats.workshopmongo.repository.UserRepository;
 import com.jeessicats.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,22 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Retorna todos os usuários
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    // Busca um usuário pelo ID
     public User findById(String id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
     }
+
+    public User insert(User user) {
+        return userRepository.insert(user);
+    }
+
+    public User fromDto(UserDTO userDto) {
+        return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
+    }
 }
+
 
