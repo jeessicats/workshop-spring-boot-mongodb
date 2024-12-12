@@ -2,6 +2,7 @@ package com.jeessicats.workshopmongo.config;
 
 import com.jeessicats.workshopmongo.domain.Post;
 import com.jeessicats.workshopmongo.domain.User;
+import com.jeessicats.workshopmongo.dto.AuthorDTO;
 import com.jeessicats.workshopmongo.repository.PostRepository;
 import com.jeessicats.workshopmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,16 @@ public class Instantiation implements CommandLineRunner {
         User olivia = new User(null, "Olivia Green", "olivia@example.com");
         User aurora = new User(null, "Aurora Grey", "aurora@example.com");
 
+        userRepository.saveAll(Arrays.asList(john, olivia, aurora));
+
         Post post1 = new Post(null, sdf.parse("21/03/2018"), "The mystery of lost socks 🧦",
                 "Do washing machines have a portal to another dimension? Because in my house, the socks that go in are never the same that come out.",
-                john);
+                new AuthorDTO(john));
 
         Post post2 = new Post(null, sdf.parse("22/03/2018"), "The burnt toast drama 🍞",
                 "It’s amazing how 5 seconds can turn a perfect breakfast into smoke and despair. R.I.P., my toast.",
-                olivia);
+                new AuthorDTO(olivia));
 
-        userRepository.saveAll(Arrays.asList(john, olivia, aurora));
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
